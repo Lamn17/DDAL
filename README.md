@@ -95,7 +95,7 @@ uv run python scripts/run_experiment.py \
 For every assigned foreground prediction, training records the quality signal
 
 $$
-q = p_{\mathrm{conf}}^{\xi}\operatorname{IoU}^{1-\xi}.
+q = p_{\mathrm{conf}}^{\xi}\mathrm{IoU}^{1-\xi}.
 $$
 
 The code maintains one exponential moving average (EMA) per class. The
