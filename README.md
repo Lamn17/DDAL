@@ -28,8 +28,7 @@ annotation.
   not already represented by labeled samples.
 - 📐 **Uncertainty-weighted selection**: uses uncertainty-weighted K-means over
   detector features and returns one nearest-centre item per cluster.
-- ⚙️ **YAML experiments**: provides ReCAL presets for VOC, KITTI, COCO,
-  Cityscapes, GTSDB, and VTSDB100.
+- ⚙️ **YAML experiments**: provides ReCAL presets for VOC, KITTI
 - 📊 **Selection-cost benchmark**: measures detector inference, feature
   extraction, scoring, and selection on a shared candidate pool.
 
@@ -84,6 +83,9 @@ the dataset layout. The preset paths are local templates, not downloaded data.
 uv run python scripts/run_experiment.py \
   --config configs/voc/config_recal.yaml
 
+# Run random sampling under the same VOC setup for a baseline
+uv run python scripts/run_experiment.py \
+  --config configs/voc/config_random.yaml
 ```
 
 ## 🧠 ReCAL Method
@@ -149,7 +151,7 @@ strategy: "recal"
 initial_labeled_count: 828
 samples_per_round: 414
 max_rounds: 7
-num_inference: -1
+num_inference: 6000
 
 strategy_args:
   recal:
@@ -178,10 +180,6 @@ Included presets:
 | --- | --- |
 | VOC | `configs/voc/config_recal.yaml` |
 | KITTI | `configs/kitti/config_recal.yaml` |
-| COCO | `configs/coco/config_recal.yaml` |
-| Cityscapes | `configs/cityscapes/config_recal.yaml` |
-| GTSDB | `configs/gtsdb/config_recal.yaml` |
-| VTSDB100 | `configs/vtsdb100/config_recal.yaml` |
 
 ## 🔧 Usage
 
@@ -204,7 +202,7 @@ uv run python scripts/run_experiment.py \
   --start_round 3
 ```
 
-### Benchmark ReCAL Selection Cost
+### Compare Selection Cost
 
 This command measures one controlled shared candidate pool. Its time includes
 detector inference, feature extraction, scoring, and final selection; model
@@ -213,6 +211,10 @@ loading, warm-up, and artifact writes are excluded.
 ```bash
 uv run python scripts/benchmark_selection.py \
   --configs \
+    configs/voc/config_random.yaml \
+    configs/voc/config_entropy.yaml \
+    configs/voc/config_badge.yaml \
+    configs/voc/config_coreset.yaml \
     configs/voc/config_recal.yaml \
   --pool-size 6000 \
   --selection-budget 414 \
@@ -220,8 +222,8 @@ uv run python scripts/benchmark_selection.py \
 ```
 
 Results are written to `outputs/selection_benchmark/selection_benchmark.csv`
-and `.md`. This benchmark is a controlled candidate-pool measurement, not a
-full active-learning round.
+and `.md`. Random is sampling-only and performs no detector inference; this
+benchmark is not a full active-learning round.
 
 ## 📊 Outputs and Evaluation
 
@@ -262,4 +264,4 @@ This project is licensed under the Apache License 2.0. See [LICENSE](LICENSE).
 - Built on [Ultralytics YOLO](https://github.com/ultralytics/ultralytics).
 - Uses [scikit-learn](https://scikit-learn.org/) for nearest-neighbour search
   and weighted K-means.
-# recal
+# ReCAL
