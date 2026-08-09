@@ -62,15 +62,6 @@ cd recal
 uv sync
 ```
 
-3. **Set the process-title prefix required by the runner**:
-
-```bash
-export PROCTITLE_STARTSTR=fdal
-```
-
-Alternatively, add `PROCTITLE_STARTSTR=fdal` to `.env.training`; the runner
-loads that file automatically.
-
 ### Prepare a Dataset
 
 Set `dataset_yaml` in the chosen configuration to a valid YOLO dataset YAML.

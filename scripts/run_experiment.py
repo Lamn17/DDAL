@@ -124,9 +124,7 @@ def apply_overrides(config: Dict, args) -> Dict:
 
 
 def set_process_title(config: Dict):
-    proctitle_startstr = os.environ['PROCTITLE_STARTSTR']
-    if not proctitle_startstr:
-        raise ValueError("Environment variable PROCTITLE_STARTSTR is not set or empty")
+    proctitle_startstr = os.environ.get('PROCTITLE_STARTSTR') or 'recal'
     proctitle_midstr = config['proctitle_midstr']
     proctitle_endstr_of = config.get('proctitle_endstr_of', '')
     
