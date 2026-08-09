@@ -51,8 +51,8 @@ budget, rounds, model, and candidate-pool policy when comparing strategies.
 1. **Clone the repository**:
 
 ```bash
-git clone <repository-url>
-cd FDAL-main
+git clone https://github.com/Lamn17/recal.git
+cd recal
 ```
 
 2. **Install dependencies with uv**:
