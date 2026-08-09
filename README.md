@@ -1,4 +1,4 @@
-# ReCAL: Residual Class-Aware Active Learning
+# ReCAL: Residual Coverage Active Learning
 
 An implementation of **ReCAL** for pool-based active learning in YOLO object
 detection.
