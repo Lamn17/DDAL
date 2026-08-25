@@ -1,0 +1,31 @@
+dataset_yaml: "VTSDB100/data.yaml"
+epochs: 26
+batch_size: 48
+val_batch_size: 8
+imgsz: 640
+device: ['0']
+workers: 8
+train_ddp: False
+master_addr: "localhost"
+master_port: 12355
+backend: "nccl"
+patience: 30
+experiments_root: "full_experiments/vtsdb100_ddal"
+proctitle_midstr: "vtsdb100_ddal"
+proctitle_endstr_of: "seed"
+seed: 1
+strategy: "ddal"
+model_name: "yolo11n.pt"
+initial_labeled_count: 6000 # 20% of 30000 train images
+max_rounds: 6
+samples_per_round: 1500 # 5% of 30000 train images
+num_inference: -1
+
+strategy_args:
+  ddal:
+    sampling_conf: 0.25
+    quality_momentum: 0.9
+    quality_initial: 0.5
+    difficulty_mode: "dual"
+    signal_mode: "both"
+    selection_mode: "bcqs"

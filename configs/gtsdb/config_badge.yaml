@@ -1,0 +1,28 @@
+dataset_yaml: "GTSDB/data_local.yaml"
+epochs: 100
+batch_size: 8
+val_batch_size: 8
+imgsz: 1024
+device: ['0']
+workers: 0
+train_ddp: False
+master_addr: "localhost"
+master_port: 12355
+backend: "nccl"
+patience: 30
+experiments_root: "full_experiments/gtsdb_badge"
+proctitle_midstr: "gtsdb_badge"
+proctitle_endstr_of: "seed"
+seed: 1
+strategy: "badge"
+model_name: "yolo11n.pt"
+initial_labeled_count: 144 # 20% of 720 train images
+max_rounds: 6
+samples_per_round: 36 # 5% of 720 train images
+num_inference: -1
+
+strategy_args:
+  badge:
+    uncertainty_method: "entropy"
+    distance_metric: "cosine"
+    beta: 1.0

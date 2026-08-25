@@ -1,0 +1,22 @@
+dataset_yaml: "GTSDB/data.yaml"
+epochs: 26
+batch_size: 16 
+val_batch_size: 8
+imgsz: 1024
+device: ['0']
+workers: 8
+train_ddp: False
+master_addr: "localhost"
+master_port: 12355
+backend: "nccl"
+patience: 30
+experiments_root: "full_experiments/gtsdb_entropy"
+proctitle_midstr: "gtsdb_entropy"
+proctitle_endstr_of: "seed"
+seed: 1
+strategy: "entropy"
+model_name: "yolo11n.pt"
+initial_labeled_count: 144 # 20% of 720 train images
+max_rounds: 6
+samples_per_round: 36 # 5% of 720 train images
+num_inference: -1

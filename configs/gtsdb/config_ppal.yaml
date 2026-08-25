@@ -1,0 +1,36 @@
+dataset_yaml: "GTSDB/data_local.yaml"
+epochs: 100
+batch_size: 16
+val_batch_size: 8
+imgsz: 1024
+device: ['0']
+workers: 8
+train_ddp: False
+master_addr: "localhost"
+master_port: 12355
+backend: "nccl"
+patience: 30
+experiments_root: "full_experiments/gtsdb_ppal"
+proctitle_midstr: "gtsdb_ppal"
+proctitle_endstr_of: "seed"
+seed: 1
+strategy: ["dcus", "ccms"]
+expand_ratios: [4.0]
+model_name: "yolo11n.pt"
+initial_labeled_count: 144 # 20% of 720 train images
+max_rounds: 6
+samples_per_round: 36 # 5% of 720 train images
+num_inference: -1
+
+strategy_args:
+  dcus:
+    momentum: 0.99
+    xi: 0.6
+    alpha: 0.2
+    beta: 0.2
+
+  ccms:
+    feature_layers: ["model.9", "model.10"]
+    distance_metric: "euclidean"
+    num_clusters: None
+    k_medoids_iters: 20

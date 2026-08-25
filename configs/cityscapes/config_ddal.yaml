@@ -1,0 +1,30 @@
+dataset_yaml: "datasets/Cityscapes/data.yaml"
+epochs: 26
+batch_size: 16
+val_batch_size: 64
+imgsz: 640
+device: ['0']
+train_ddp: False
+master_addr: "localhost"
+master_port: 12355
+backend: "nccl"
+patience: 50
+experiments_root: "full_experiments/experiments_3010/cityscapes_ddal"
+proctitle_midstr: "cityscapes_ddal"
+proctitle_endstr_of: "seed"
+seed: 1
+strategy: "ddal"
+model_name: "yolo11n.pt"
+initial_labeled_count: 149 # 5% of 2975
+max_rounds: 7
+samples_per_round: 75 # 2.5% of 2975
+num_inference: -1
+
+strategy_args:
+  ddal:
+    sampling_conf: 0.25
+    quality_momentum: 0.9
+    quality_initial: 0.5
+    difficulty_mode: "dual"
+    signal_mode: "both"
+    selection_mode: "bcqs"

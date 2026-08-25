@@ -1,0 +1,38 @@
+dataset_yaml: "VTSDB100/data.yaml"
+epochs: 20
+batch_size: 48
+val_batch_size: 8
+workers: 8
+imgsz: 640
+device: ['0']
+inference_device: 0
+inference_batch_size: 32
+train_ddp: False
+master_addr: "localhost"
+master_port: 12355
+backend: "nccl"
+patience: 30
+experiments_root: "full_experiments/vtsdb100_ppal"
+proctitle_midstr: "vtsdb100_ppal"
+proctitle_endstr_of: "seed"
+seed: 1
+strategy: ["dcus", "ccms"]
+expand_ratios: [4.0]
+model_name: "yolo11n.pt"
+initial_labeled_count: 6000 # 20% of 30000 train images
+max_rounds: 6
+samples_per_round: 1500 # 5% of 30000 train images
+num_inference: -1
+
+strategy_args:
+  dcus:
+    momentum: 0.99
+    xi: 0.6
+    alpha: 0.2
+    beta: 0.2
+
+  ccms:
+    feature_layers: ["model.9", "model.10"]
+    distance_metric: "euclidean"
+    num_clusters: None
+    k_medoids_iters: 20

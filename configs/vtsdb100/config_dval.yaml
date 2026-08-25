@@ -1,0 +1,65 @@
+dataset_yaml: "VTSDB100/data.yaml"
+epochs: 26
+batch_size: 48
+val_batch_size: 8
+workers: 8
+imgsz: 640
+device: ['0']
+inference_device: 0
+inference_batch_size: 32
+train_ddp: False
+master_addr: "localhost"
+master_port: 12355
+backend: "nccl"
+patience: 30
+experiments_root: "full_experiments/vtsdb100_dval"
+proctitle_midstr: "vtsdb100_dval"
+proctitle_endstr_of: "seed"
+seed: 1
+strategy: ["ddus", "maple"]
+expand_ratios: [2.0]
+model_name: "yolo11n.pt"
+initial_labeled_count: 6500 # 20% of 30000 train images
+max_rounds: 6
+samples_per_round: 1625 # 5% of 30000 train images
+num_inference: -1
+
+strategy_args:
+  ddus:
+    momentum: 0.99
+    initial_quality: 0.5
+    xi: 0.6
+    lambda_cls: 0.6
+    lambda_loc: 0.4
+    rho: 0.5
+    top_m: 3
+    sampling_conf: 0.25
+
+  maple:
+    maple_checkpoint_pattern: "{experiment_dir}/maple_checkpoints/round_{round:03d}.pt"
+    maple_checkpoint_fallback_latest: False
+    maple_weight: 1.0
+    entropy_weight: 1.0
+    disagreement_weight: 1.0
+    inverse_confidence_weight: 0.0
+    yolo_confidence_weight: 0.0
+    padding: 0.15
+    batch_size: 32
+    maple_device: "cuda:0"
+
+maple_training:
+  enabled: True
+  crop_dirname: "maple_crops"
+  backbone: "ViT-B/16"
+  n_ctx: 2
+  ctx_init: ""
+  prompt_depth: 9
+  epochs: 3
+  batch_size: 32
+  num_workers: 4
+  val_interval: 0
+  learning_rate: 0.0025
+  weight_decay: 0.0005
+  momentum: 0.9
+  device: "cuda:0"
+  padding: 0.15
